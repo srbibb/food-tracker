@@ -56,7 +56,7 @@ def pantryWindow():
     pantryLabel = tk.Label(viewWindow, text = "Pantry items")
     pantryLabel.pack()
     pantryText = tk.Text(viewWindow, height = 25, width = 52)
-    pantryText.pack()
+    pantryText.pack(padx=10,pady=10)
     if exists("pantry.txt"):
         pantryFile = open("pantry.txt", "r")
         pantry = pantryFile.read().split(",")
@@ -71,18 +71,18 @@ def toBuyWindow():
     toBuyLabel = tk.Label(toBuyWindow, text = "Please enter the items you need for this week's meals.")
     toBuyLabel.pack()
     toBuyText = tk.Text(toBuyWindow, height = 25, width = 52)
-    toBuyText.pack()
+    toBuyText.pack(padx=10,pady=10)
     toBuyInput = tk.Button(toBuyWindow, text = "Enter items",command=lambda:neededItems(toBuyText,toBuyWindow))
     toBuyInput.pack(pady=10)
     backBtn = tk.Button(toBuyWindow, text="Back",command=lambda:back(toBuyWindow,root))
-    backBtn.pack(pady=11)
+    backBtn.pack(pady=10)
 
 def shopListWindow(toBuy):
     shopListWindow = tk.Toplevel(root)
     shopListLabel = tk.Label(shopListWindow, text = "Here is your shopping list.")
     shopListLabel.pack()
     shopListText = tk.Text(shopListWindow, height = 5, width = 52)
-    shopListText.pack()
+    shopListText.pack(padx=10,pady=10)
     for x in toBuy:
             shopListText.insert(END, x + '\n')
     closeBtn = tk.Button(shopListWindow, text="Close",command=lambda:back(shopListWindow,root))
