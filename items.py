@@ -12,28 +12,29 @@ def createPantryList(itemsList):
     return pantryItems
 
 def addItems(pantryItems):
-    pantryFile = open("pantry.txt", "a")
-    for i in range(len(pantryItems)):
-        pantryFile.write(pantryItems[i] + ",")
+    writePantry(pantryItems)
 
 def removeItems(pantryItems):
-    if exists("pantry.txt"):
-        pantryFile = open("pantry.txt", "r")
+    if exists("pantry.csv"):
+        pantryFile = open("pantry.csv", "r")
         pantry = pantryFile.read().split(",")
 
         for i in range(len(pantryItems)):
             if pantryItems[i] in pantry:
                 pantry.remove(pantryItems[i])
     
-        pantryFile = open("pantry.txt", "w")
-        for i in range(len(pantry)):
-            if pantry[i] != "":
-                pantryFile.write(pantry[i] + ",")
+        writePantry(pantry)
+
+def writePantry(items):
+    pantryFile = open("pantry.csv", "w")
+    for i in range(len(items)):
+        if items[i] != "":
+            pantryFile.write(items[i] + ",")
 
 def createShopList(neededItems):
     toBuy = []
-    if exists("pantry.txt"):
-        pantryFile = open("pantry.txt", "r")
+    if exists("pantry.csv"):
+        pantryFile = open("pantry.csv", "r")
         pantry = pantryFile.read().split(",")
 
     for i in neededItems:

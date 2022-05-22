@@ -4,8 +4,8 @@ from items import addItems, removeItems, createPantryList, createShopList
 from os.path import exists
 
 pantryItems = []
-if exists("pantry.txt"):
-    pantryFile = open("pantry.txt", "r")
+if exists("pantry.csv"):
+    pantryFile = open("pantry.csv", "r")
     pantry = pantryFile.read().split(",")
     for i in range(len(pantry)):
         if pantry[i] != "" and pantry[i] != "\n":
@@ -16,18 +16,28 @@ def back(hideWindow,showWindow):
     showWindow.deiconify()
 
 def retrieveItems(textBox,mode):
+    global pantryItems
     itemsList = textBox.get("1.0",'end-1c')
-    newItems = createPantryList(itemsList)
-    pantryItems.extend(newItems)
+    enteredItems = createPantryList(itemsList)
     if mode == 0:
-        addItems(newItems)
+        pantryItems = list(set(pantryItems + enteredItems))
+        addItems(pantryItems)
     elif mode == 1:
-        removeItems(newItems)
+        removeItems(enteredItems)
+        for i in range(len(enteredItems)):
+            if enteredItems[i] in pantryItems:
+                pantryItems.remove(enteredItems[i])
 
 def neededItems(textBox,toBuyWindow):
     itemsList = textBox.get("1.0",'end-1c')
     neededItems = createPantryList(itemsList)
     toBuy = createShopList(neededItems)
+
+    pantryFile = open("shopping list.txt", "w")
+    for i in range(len(toBuy)):
+        if toBuy[i] != "":
+            pantryFile.write(toBuy[i] + ",")
+
     toBuyWindow.withdraw()
     shopListWindow(toBuy)
 
@@ -36,7 +46,7 @@ def addWindow():
     root.withdraw()
     pantryText = tk.Text(addWindow, height=25, width=50)
     pantryText.pack(padx=10,pady=10)
-    pantryInput = tk.Button(addWindow, text = "Enter items",command=lambda:retrieveItems(pantryText,0))
+    pantryInput = tk.Button(addWindow, text = "Enter items",command=lambda:[retrieveItems(pantryText,0),back(addWindow,root)])
     pantryInput.pack(pady=10)
     backBtn = tk.Button(addWindow, text="Back",command=lambda:back(addWindow,root))
     backBtn.pack(pady=10)
@@ -46,7 +56,7 @@ def removeWindow():
     root.withdraw()
     pantryText = tk.Text(removeWindow, height=25, width=52)
     pantryText.pack(padx=10,pady=10)
-    pantryInput = tk.Button(removeWindow, text = "Remove items",command=lambda:retrieveItems(pantryText,1))
+    pantryInput = tk.Button(removeWindow, text = "Remove items",command=lambda:[retrieveItems(pantryText,1),back(removeWindow,root)])
     pantryInput.pack(pady=10)
     backBtn = tk.Button(removeWindow, text="Back",command=lambda:back(removeWindow,root))
     backBtn.pack(pady=10)
@@ -57,8 +67,8 @@ def pantryWindow():
     pantryLabel.pack()
     pantryText = tk.Text(viewWindow, height = 25, width = 52)
     pantryText.pack(padx=10,pady=10)
-    if exists("pantry.txt"):
-        pantryFile = open("pantry.txt", "r")
+    if exists("pantry.csv"):
+        pantryFile = open("pantry.csv", "r")
         pantry = pantryFile.read().split(",")
         for x in pantry:
             pantryText.insert(END, x + '\n')
