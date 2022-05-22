@@ -8,7 +8,7 @@ if exists("pantry.txt"):
     pantryFile = open("pantry.txt", "r")
     pantry = pantryFile.read().split(",")
     for i in range(len(pantry)):
-        if pantry[i] != "":
+        if pantry[i] != "" and pantry[i] != "\n":
             pantryItems.append(pantry[i])
 
 def back(hideWindow,showWindow):

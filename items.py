@@ -1,7 +1,14 @@
 from os.path import exists
 
+def handleInput(rawInput):
+    processedInput = []
+    for i in range(len(rawInput)):
+        if rawInput[i] != "" and rawInput[i] != "\n":
+            processedInput.append(rawInput[i].lower().strip())
+    return processedInput
+
 def createPantryList(itemsList):
-    pantryItems = itemsList.split('\n')
+    pantryItems = handleInput(itemsList.split('\n'))
     return pantryItems
 
 def addItems(pantryItems):
