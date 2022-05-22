@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.constants import END
 from items import addItems, removeItems, createPantryList, createShopList
-from os.path import exists
+from os.path import exists 
 
 pantryItems = []
 if exists("pantry.csv"):

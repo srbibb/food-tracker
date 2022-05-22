@@ -28,7 +28,7 @@ def removeItems(pantryItems):
 def writePantry(items):
     pantryFile = open("pantry.csv", "w")
     for i in range(len(items)):
-        if items[i] != "":
+        if items[i] != "": 
             pantryFile.write(items[i] + ",")
 
 def createShopList(neededItems):
