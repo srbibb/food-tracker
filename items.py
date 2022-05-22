@@ -25,7 +25,7 @@ def removeItems(pantryItems):
     
         writePantry(pantry)
 
-def writePantry(items):
+def writePantry(items): 
     pantryFile = open("pantry.csv", "w")
     for i in range(len(items)):
         if items[i] != "": 

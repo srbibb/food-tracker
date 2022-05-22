@@ -3,7 +3,7 @@ from tkinter.constants import END
 from items import addItems, removeItems, createPantryList, createShopList
 from os.path import exists 
 
-pantryItems = []
+pantryItems = [] 
 if exists("pantry.csv"):
     pantryFile = open("pantry.csv", "r")
     pantry = pantryFile.read().split(",")
