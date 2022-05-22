@@ -1,7 +1,7 @@
 from os.path import exists
 
 def handleInput(rawInput):
-    processedInput = []
+    processedInput = [] 
     for i in range(len(rawInput)):
         if rawInput[i] != "" and rawInput[i] != "\n":
             processedInput.append(rawInput[i].lower().strip())

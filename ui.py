@@ -13,7 +13,7 @@ if exists("pantry.csv"):
 
 def back(hideWindow,showWindow):
     hideWindow.withdraw()
-    showWindow.deiconify()
+    showWindow.deiconify() 
 
 def retrieveItems(textBox,mode):
     global pantryItems
