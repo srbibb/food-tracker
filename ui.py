@@ -33,7 +33,7 @@ def neededItems(textBox,toBuyWindow):
     neededItems = createPantryList(itemsList)
     toBuy = createShopList(neededItems)
 
-    pantryFile = open("shopping list.txt", "w")
+    pantryFile = open("shopping list.csv", "w")
     for i in range(len(toBuy)):
         if toBuy[i] != "":
             pantryFile.write(toBuy[i] + ",")
