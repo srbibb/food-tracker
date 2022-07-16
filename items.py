@@ -11,22 +11,9 @@ def createPantryList(itemsList):
     pantryItems = handleInput(itemsList.split('\n'))
     return pantryItems
 
-def addItems(pantryItems):
-    writePantry(pantryItems)
-
-def removeItems(pantryItems):
-    if exists("pantry.csv"):
-        pantryFile = open("pantry.csv", "r")
-        pantry = pantryFile.read().split(",")
-
-        for i in range(len(pantryItems)):
-            if pantryItems[i] in pantry:
-                pantry.remove(pantryItems[i])
-    
-        writePantry(pantry)
-
-def writePantry(items): 
+def writePantry(itemsList): 
     pantryFile = open("pantry.csv", "w")
+    items = list(set(itemsList))
     for i in range(len(items)):
         if items[i] != "": 
             pantryFile.write(items[i] + ",")
