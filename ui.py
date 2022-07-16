@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter.constants import END
-from items import createPantryList, createShopList, writePantry
+from items import createList, createShopList, writeEssentials, writePantry
 from os.path import exists 
 
 pantryItems = [] 
@@ -18,12 +18,17 @@ def back(hideWindow,showWindow):
 def retrieveItems(textBox):
     global pantryItems
     itemsList = textBox.get("1.0",'end-1c')
-    pantryItems = createPantryList(itemsList)
+    pantryItems = createList(itemsList)
     writePantry(pantryItems)
+
+def retrieveEssentials(textBox):
+    essentials = textBox.get("1.0",'end-1c')
+    essentialsList = createList(essentials)
+    writeEssentials(essentialsList)
 
 def neededItems(textBox,toBuyWindow):
     itemsList = textBox.get("1.0",'end-1c')
-    neededItems = createPantryList(itemsList)
+    neededItems = createList(itemsList)
     toBuy = createShopList(neededItems)
 
     pantryFile = open("shopping list.csv", "w")
@@ -33,16 +38,6 @@ def neededItems(textBox,toBuyWindow):
 
     toBuyWindow.withdraw()
     shopListWindow(toBuy)
-
-def addWindow():
-    addWindow = tk.Toplevel(root)
-    root.withdraw()
-    pantryText = tk.Text(addWindow, height=25, width=50)
-    pantryText.pack(padx=10,pady=10)
-    pantryInput = tk.Button(addWindow, text = "Enter items",command=lambda:[retrieveItems(pantryText,0),back(addWindow,root)])
-    pantryInput.pack(pady=10)
-    backBtn = tk.Button(addWindow, text="Back",command=lambda:back(addWindow,root))
-    backBtn.pack(pady=10)
 
 def pantryWindow():
     pantryWindow = tk.Toplevel(root)
@@ -83,11 +78,29 @@ def shopListWindow(toBuy):
     closeBtn = tk.Button(shopListWindow, text="Close",command=lambda:back(shopListWindow,root))
     closeBtn.pack(pady=10)
 
+def essentialsWindow():
+    essentialsWindow = tk.Toplevel(root)
+    essentialsLabel = tk.Label(essentialsWindow, text = "Essential items")
+    essentialsLabel.pack()
+    essentialsText = tk.Text(essentialsWindow, height = 25, width = 52)
+    essentialsText.pack(padx=10,pady=10)
+    if exists("essentials.csv"):
+        essentialFile = open("essentials.csv", "r")
+        items = essentialFile.read().split(",")
+        for x in items:
+            essentialsText.insert(END, x + '\n')
+    essentialsInput = tk.Button(essentialsWindow, text = "Update list",command=lambda:[retrieveEssentials(essentialsText),back(essentialsWindow,root)])
+    essentialsInput.pack(pady=10)
+    backBtn = tk.Button(essentialsWindow, text="Back",command=lambda:back(essentialsWindow,root))
+    backBtn.pack(pady=10)
+
 root = tk.Tk()
 viewBtn = tk.Button(root, text="View and edit pantry", command=pantryWindow)
 viewBtn.pack(padx = 10, pady=10)
 createListBtn = tk.Button(root, text="Create shopping list", command=toBuyWindow)
 createListBtn.pack(pady=10)
+essentialsBtn = tk.Button(root, text="View and edit essentials list", command=essentialsWindow)
+essentialsBtn.pack(padx = 10, pady=10)
 quitBtn = tk.Button(root, text="Quit",command=quit)
 quitBtn.pack(pady=10)
 
