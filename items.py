@@ -12,14 +12,14 @@ def createList(itemsList):
     return items
 
 def writePantry(itemsList): 
-    pantryFile = open("pantry.csv", "w")
+    pantryFile = open("pantry.txt", "w")
     items = list(set(itemsList))
     for i in range(len(items)):
         if items[i] != "": 
             pantryFile.write(items[i] + ",")
 
 def writeEssentials(itemsList): 
-    essentialsFile = open("essentials.csv", "w")
+    essentialsFile = open("essentials.txt", "w")
     items = list(set(itemsList))
     for i in range(len(items)):
         if items[i] != "": 
@@ -27,20 +27,19 @@ def writeEssentials(itemsList):
 
 def createShopList(neededItems):
     toBuy = []
-    if exists("pantry.csv"):
-        pantryFile = open("pantry.csv", "r")
+    if exists("pantry.txt"):
+        pantryFile = open("pantry.txt", "r")
         pantry = pantryFile.read().split(",")
 
-    if exists("essentials.csv"):
-        essentialsFile = open("essentials.csv", "r")
+    if exists("essentials.txt"):
+        essentialsFile = open("essentials.txt", "r")
         essentials = essentialsFile.read().split(",")
 
     for i in neededItems:
-        if i not in pantry:
+        if i not in pantry and i != "":
             toBuy.append(i)
 
     for i in essentials:
-        if i not in pantry:
+        if i not in pantry and i not in toBuy and i != "":
             toBuy.append(i)
-
     return toBuy

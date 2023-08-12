@@ -4,8 +4,8 @@ from items import createList, createShopList, writeEssentials, writePantry
 from os.path import exists 
 
 pantryItems = [] 
-if exists("pantry.csv"):
-    pantryFile = open("pantry.csv", "r")
+if exists("pantry.txt"):
+    pantryFile = open("pantry.txt", "r")
     pantry = pantryFile.read().split(",")
     for i in range(len(pantry)):
         if pantry[i] != "" and pantry[i] != "\n":
@@ -31,7 +31,7 @@ def neededItems(textBox,toBuyWindow):
     neededItems = createList(itemsList)
     toBuy = createShopList(neededItems)
 
-    pantryFile = open("shopping list.csv", "w")
+    pantryFile = open("shopping list.txt", "w")
     for i in range(len(toBuy)):
         if toBuy[i] != "":
             pantryFile.write(toBuy[i] + ",")
@@ -41,12 +41,13 @@ def neededItems(textBox,toBuyWindow):
 
 def pantryWindow():
     pantryWindow = tk.Toplevel(root)
+    #pantryWindow.geometry('500x600+0+0')
     pantryLabel = tk.Label(pantryWindow, text = "Pantry items")
     pantryLabel.pack()
     pantryText = tk.Text(pantryWindow, height = 25, width = 52)
     pantryText.pack(padx=10,pady=10)
-    if exists("pantry.csv"):
-        pantryFile = open("pantry.csv", "r")
+    if exists("pantry.txt"):
+        pantryFile = open("pantry.txt", "r")
         pantry = pantryFile.read().split(",")
         for x in pantry:
             pantryText.insert(END, x + '\n')
@@ -84,8 +85,8 @@ def essentialsWindow():
     essentialsLabel.pack()
     essentialsText = tk.Text(essentialsWindow, height = 25, width = 52)
     essentialsText.pack(padx=10,pady=10)
-    if exists("essentials.csv"):
-        essentialFile = open("essentials.csv", "r")
+    if exists("essentials.txt"):
+        essentialFile = open("essentials.txt", "r")
         items = essentialFile.read().split(",")
         for x in items:
             essentialsText.insert(END, x + '\n')
@@ -96,11 +97,11 @@ def essentialsWindow():
 
 root = tk.Tk()
 viewBtn = tk.Button(root, text="View and edit pantry", command=pantryWindow)
-viewBtn.pack(padx = 10, pady=10)
+viewBtn.pack(pady=10)
 createListBtn = tk.Button(root, text="Create shopping list", command=toBuyWindow)
 createListBtn.pack(pady=10)
 essentialsBtn = tk.Button(root, text="View and edit essentials list", command=essentialsWindow)
-essentialsBtn.pack(padx = 10, pady=10)
+essentialsBtn.pack(padx = 25, pady=10)
 quitBtn = tk.Button(root, text="Quit",command=quit)
 quitBtn.pack(pady=10)
 
